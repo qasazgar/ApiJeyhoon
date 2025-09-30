@@ -1,14 +1,14 @@
 {
 	"info": {
-		"_postman_id": "0f661ffe-bcc6-401d-ad3b-91f9858aef54",
-		"name": "kia",
+		"_postman_id": "b0cf751c-2ecb-45a1-ab0a-f5f544a57787",
+		"name": "login",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "39309194",
-		"_collection_link": "https://warped-escape-279062.postman.co/workspace/Scf~47aac3d1-9e47-4434-959a-3ebb8018bdf3/collection/39309194-0f661ffe-bcc6-401d-ad3b-91f9858aef54?action=share&source=collection_link&creator=39309194"
+		"_collection_link": "https://warped-escape-279062.postman.co/workspace/Scf~47aac3d1-9e47-4434-959a-3ebb8018bdf3/collection/39309194-b0cf751c-2ecb-45a1-ab0a-f5f544a57787?action=share&source=collection_link&creator=39309194"
 	},
 	"item": [
 		{
-			"name": "otp",
+			"name": "sendOtp",
 			"event": [
 				{
 					"listen": "test",
@@ -22,102 +22,36 @@
 							"});"
 						],
 						"type": "text/javascript",
-						"packages": {}
+						"packages": {},
+						"requests": {}
 					}
 				}
 			],
 			"request": {
 				"method": "POST",
-				"header": [
-					{
-						"key": "accept",
-						"value": "application/json, text/plain, */*"
-					},
-					{
-						"key": "accept-language",
-						"value": "en-US,en;q=0.9"
-					},
-					{
-						"key": "cache-control",
-						"value": "no-cache"
-					},
-					{
-						"key": "content-type",
-						"value": "application/json"
-					},
-					{
-						"key": "origin",
-						"value": "https://scf-admin.staging.k8s.wallex.dev"
-					},
-					{
-						"key": "pragma",
-						"value": "no-cache"
-					},
-					{
-						"key": "priority",
-						"value": "u=1, i"
-					},
-					{
-						"key": "referer",
-						"value": "https://scf-admin.staging.k8s.wallex.dev/"
-					},
-					{
-						"key": "sec-ch-ua",
-						"value": "\"Not)A;Brand\";v=\"8\", \"Chromium\";v=\"138\", \"Google Chrome\";v=\"138\""
-					},
-					{
-						"key": "sec-ch-ua-mobile",
-						"value": "?0"
-					},
-					{
-						"key": "sec-ch-ua-platform",
-						"value": "\"Windows\""
-					},
-					{
-						"key": "sec-fetch-dest",
-						"value": "empty"
-					},
-					{
-						"key": "sec-fetch-mode",
-						"value": "cors"
-					},
-					{
-						"key": "sec-fetch-site",
-						"value": "same-site"
-					},
-					{
-						"key": "user-agent",
-						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36"
-					}
-				],
+				"header": [],
 				"body": {
-					"mode": "raw",
-					"raw": "{\"ssn\":\"{{nationalIdUser}}\"}",
-					"options": {
-						"raw": {
-							"language": "json"
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "ssn",
+							"value": "{{nationalIdUser}}",
+							"type": "text"
 						}
-					}
+					]
 				},
 				"url": {
-					"raw": "https://scf.staging.k8s.wallex.dev/api/admin/v1/auth/otp",
-					"protocol": "https",
+					"raw": "{{base_url}}api/panel/v1/auth/otp",
 					"host": [
-						"scf",
-						"staging",
-						"k8s",
-						"wallex",
-						"dev"
+						"{{base_url}}api"
 					],
 					"path": [
-						"api",
-						"admin",
+						"panel",
 						"v1",
 						"auth",
 						"otp"
 					]
-				},
-				"description": "Generated from cURL: curl 'https://scf.staging.k8s.wallex.dev/api/admin/v1/auth/otp' \\\r\n  -H 'accept: application/json, text/plain, */*' \\\r\n  -H 'accept-language: en-US,en;q=0.9' \\\r\n  -H 'cache-control: no-cache' \\\r\n  -H 'content-type: application/json' \\\r\n  -H 'origin: https://scf-admin.staging.k8s.wallex.dev' \\\r\n  -H 'pragma: no-cache' \\\r\n  -H 'priority: u=1, i' \\\r\n  -H 'referer: https://scf-admin.staging.k8s.wallex.dev/' \\\r\n  -H 'sec-ch-ua: \"Not)A;Brand\";v=\"8\", \"Chromium\";v=\"138\", \"Google Chrome\";v=\"138\"' \\\r\n  -H 'sec-ch-ua-mobile: ?0' \\\r\n  -H 'sec-ch-ua-platform: \"Windows\"' \\\r\n  -H 'sec-fetch-dest: empty' \\\r\n  -H 'sec-fetch-mode: cors' \\\r\n  -H 'sec-fetch-site: same-site' \\\r\n  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36' \\\r\n  --data-raw '{\"ssn\":\"0020227108\"}'"
+				}
 			},
 			"response": []
 		},
@@ -133,134 +67,50 @@
 							"});\r",
 							"pm.test(\"Response time is less than 200ms\", function () {\r",
 							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
-							"});"
+							"});\r",
+							"const response = pm.response.json(); // Parse the JSON response.\r",
+							"\r",
+							"// Store the 'token' in an environment variable\r",
+							"pm.environment.set(\"token\", response.data.token);"
 						],
 						"type": "text/javascript",
-						"packages": {}
+						"packages": {},
+						"requests": {}
 					}
 				}
 			],
 			"request": {
 				"method": "POST",
-				"header": [
-					{
-						"key": "accept",
-						"value": "application/json, text/plain, */*"
-					},
-					{
-						"key": "accept-language",
-						"value": "en-US,en;q=0.9"
-					},
-					{
-						"key": "cache-control",
-						"value": "no-cache"
-					},
-					{
-						"key": "content-type",
-						"value": "application/json"
-					},
-					{
-						"key": "origin",
-						"value": "https://scf-admin.staging.k8s.wallex.dev"
-					},
-					{
-						"key": "pragma",
-						"value": "no-cache"
-					},
-					{
-						"key": "priority",
-						"value": "u=1, i"
-					},
-					{
-						"key": "referer",
-						"value": "https://scf-admin.staging.k8s.wallex.dev/"
-					},
-					{
-						"key": "sec-ch-ua",
-						"value": "\"Not)A;Brand\";v=\"8\", \"Chromium\";v=\"138\", \"Google Chrome\";v=\"138\""
-					},
-					{
-						"key": "sec-ch-ua-mobile",
-						"value": "?0"
-					},
-					{
-						"key": "sec-ch-ua-platform",
-						"value": "\"Windows\""
-					},
-					{
-						"key": "sec-fetch-dest",
-						"value": "empty"
-					},
-					{
-						"key": "sec-fetch-mode",
-						"value": "cors"
-					},
-					{
-						"key": "sec-fetch-site",
-						"value": "same-site"
-					},
-					{
-						"key": "user-agent",
-						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36"
-					}
-				],
+				"header": [],
 				"body": {
-					"mode": "raw",
-					"raw": "{\"ssn\":\"{{nationalIdUser}}\",\"otp_code\":123456}",
-					"options": {
-						"raw": {
-							"language": "json"
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "ssn",
+							"value": "{{nationalIdUser}}",
+							"type": "text"
+						},
+						{
+							"key": "otp_code",
+							"value": "123456",
+							"type": "text"
 						}
-					}
+					]
 				},
 				"url": {
-					"raw": "https://scf.staging.k8s.wallex.dev/api/admin/v1/auth/login",
-					"protocol": "https",
+					"raw": "{{base_url}}api/panel/v1/auth/login",
 					"host": [
-						"scf",
-						"staging",
-						"k8s",
-						"wallex",
-						"dev"
+						"{{base_url}}api"
 					],
 					"path": [
-						"api",
-						"admin",
+						"panel",
 						"v1",
 						"auth",
 						"login"
 					]
-				},
-				"description": "Generated from cURL: curl 'https://scf.staging.k8s.wallex.dev/api/admin/v1/auth/login' \\\r\n  -H 'accept: application/json, text/plain, */*' \\\r\n  -H 'accept-language: en-US,en;q=0.9' \\\r\n  -H 'cache-control: no-cache' \\\r\n  -H 'content-type: application/json' \\\r\n  -H 'origin: https://scf-admin.staging.k8s.wallex.dev' \\\r\n  -H 'pragma: no-cache' \\\r\n  -H 'priority: u=1, i' \\\r\n  -H 'referer: https://scf-admin.staging.k8s.wallex.dev/' \\\r\n  -H 'sec-ch-ua: \"Not)A;Brand\";v=\"8\", \"Chromium\";v=\"138\", \"Google Chrome\";v=\"138\"' \\\r\n  -H 'sec-ch-ua-mobile: ?0' \\\r\n  -H 'sec-ch-ua-platform: \"Windows\"' \\\r\n  -H 'sec-fetch-dest: empty' \\\r\n  -H 'sec-fetch-mode: cors' \\\r\n  -H 'sec-fetch-site: same-site' \\\r\n  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36' \\\r\n  --data-raw '{\"ssn\":\"0020227108\",\"otp_code\":123456}'"
+				}
 			},
 			"response": []
-		}
-	],
-	"event": [
-		{
-			"listen": "prerequest",
-			"script": {
-				"type": "text/javascript",
-				"packages": {},
-				"exec": [
-					""
-				]
-			}
-		},
-		{
-			"listen": "test",
-			"script": {
-				"type": "text/javascript",
-				"packages": {},
-				"exec": [
-					"pm.test(\"Status code is 200\", function () {\r",
-					"    pm.response.to.have.status(200);\r",
-					"});\r",
-					"pm.test(\"Response time is less than 200ms\", function () {\r",
-					"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
-					"});"
-				]
-			}
 		}
 	]
 }
